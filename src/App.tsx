@@ -7,12 +7,22 @@ import { TodoList } from './TodoList'
 
 import { TaskType } from "./TodoList";
 
+import { v1 as uuidv1 } from 'uuid';
+
+
+// const v1options = {
+//   node: [0x01, 0x23, 0x45, 0x67, 0x89, 0xab],
+//   clockseq: 0x1234,
+//   msecs: new Date('2011-11-01').getTime(),
+//   nsecs: 5678,
+// };
+
 
 let InitTasks: Array<TaskType> = [
-  { id: 1, title: "CSS" , isDone: true },
-  { id: 2, title: "JS" , isDone: false },
-  { id: 3, title: "HTML" , isDone: true },
-  { id: 4, title: "XHTML" , isDone: true },
+  { id: uuidv1(), title: "CSS" , isDone: true },
+  { id: uuidv1(), title: "HTML" , isDone: true },
+  { id: uuidv1(), title: "XHTML" , isDone: true },
+  { id: uuidv1(), title: "JS" , isDone: false },
 ]
 
 
@@ -21,15 +31,20 @@ export type FilterValueType = 'all' | 'completed' | 'active'; // или
 
 function App() {
 
-  let [ tasks, setTasks ] = useState( InitTasks )
-  let [ filter, setFilter ] = useState<FilterValueType>("all")
+  const [ tasks, setTasks ] = useState( InitTasks )
+  const [ filter, setFilter ] = useState<FilterValueType>("all")
 
 
-  const removeTask  = ( id: number ) => {
+  const removeTask  = ( id: string ) => {
     setTasks( tasks.filter( e  => id !== e.id  ) )
   }
+
   const changeFilter = ( value: FilterValueType ) => {
     setFilter( value )
+  }
+  
+  const addTask = ( title: string ) => {
+    setTasks( [ ...tasks, { id: uuidv1(), title, isDone: false }] )
   }
 
 
@@ -40,10 +55,7 @@ function App() {
   }
   if (filter === "active") {
     tasksForTodoList = tasks.filter( t => t.isDone === false ) 
-  }
-
-  console.log(filter);
-  
+  }  
 
 
   return (
@@ -51,6 +63,7 @@ function App() {
       <TodoList 
         changeFilter = { changeFilter }
         removeTask = { removeTask } 
+        addNewTask = { addTask }
         title = { 'What to learn'} 
         tasks = { tasksForTodoList }  
       />
