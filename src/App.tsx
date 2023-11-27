@@ -42,9 +42,20 @@ function App() {
   const changeFilter = ( value: FilterValueType ) => {
     setFilter( value )
   }
-  
+
   const addTask = ( title: string ) => {
     setTasks( [ ...tasks, { id: uuidv1(), title, isDone: false }] )
+  }
+
+  const changeStatusTask = ( idTask: string, isDone: boolean ) => {
+    const newTask = tasks.find( t => t.id === idTask )
+
+    if( newTask ) {
+      newTask.isDone = isDone
+    }
+    
+    setTasks( [ ...tasks ] )
+    
   }
 
 
@@ -61,11 +72,13 @@ function App() {
   return (
     <div>
       <TodoList 
+        changeStatusTask = { changeStatusTask }
         changeFilter = { changeFilter }
         removeTask = { removeTask } 
         addNewTask = { addTask }
         title = { 'What to learn'} 
         tasks = { tasksForTodoList }  
+        filterActiveBtn = { filter }
       />
     </div>
   );
