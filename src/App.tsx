@@ -1,11 +1,14 @@
 import React from 'react';
 import { useState } from 'react';
 
-import './App.css';
-
 import { TodoList } from './TodoList'
+import { AddItemForm } from './AddItemForm'
 
 import { v1 as uuidv1 } from 'uuid';
+
+import { TaskType } from './TodoList'
+
+import './App.css';
 
 
 export type FilterValueType = 'all' | 'completed' | 'active'; // или 
@@ -16,7 +19,9 @@ type todoLists = {
   filter: FilterValueType,
 }
 
-
+type AllTasksObjType = {
+  [ key: string ]: Array<TaskType>
+}
 
 
 
@@ -63,26 +68,39 @@ function App() {
 
   }
 
+  const changeTitleTask = ( newTitle: string, idTask: string, idTodoList: string ) => {
+
+    const findChangeTask = allTasksObj[idTodoList].find( el => el.id === idTask )
+
+    if(findChangeTask) {
+
+      findChangeTask.title = newTitle
+  
+      setAllTasksObj(
+        {
+          ...allTasksObj,
+          [ idTodoList ]: [ ...allTasksObj[ idTodoList ] ]
+        }
+      )
+    }
 
 
-
+  }
 
   // todoLists!
-
   const todoListsID_1 = uuidv1()
   const todoListsID_2 = uuidv1()
 
+
   const [ todoLists, setTodoLists] = useState<Array<todoLists>>( 
     [ 
-      { id: todoListsID_1, title: "What to learn" , filter: "active" },
-      { id: todoListsID_2, title: "What to buy" , filter: "completed" }, 
+      { id: todoListsID_1, title: "What to learn" , filter: "all" },
+      { id: todoListsID_2, title: "What to buy" , filter: "all" }, 
     ] 
   )
 
-
   // ассщциативный массив
-
-  const [ allTasksObj, setAllTasksObj ] = useState( {
+  const [ allTasksObj, setAllTasksObj ] = useState<AllTasksObjType> ( {
     [ todoListsID_1 ]: [
       { id: uuidv1(), title: "CSS" , isDone: true },
       { id: uuidv1(), title: "HTML" , isDone: true },
@@ -98,32 +116,68 @@ function App() {
 
   } )
 
-  const changeFilter = ( value: FilterValueType, ID: string ) => {
 
-    let todoListFilter = todoLists.find( e => e.id === ID )
-
-    if (todoListFilter) {
-      todoListFilter.filter = value
-      setTodoLists( [ ...todoLists ] )
-    }
-    
-  }
-
+  
   const removeTodoList = (ID: string) => {
-
+    
     const newTodoLists = todoLists.filter(e => e.id !== ID)
-
+    
     setTodoLists( newTodoLists )
-
+    
     // удалить данные о задачах если сам лист удален
     delete allTasksObj[ID]
     setAllTasksObj( { ...allTasksObj } )
+    
+  }
+  
+  const addTodoList = ( title: string ) => {
+    
+    const newTodoList: todoLists = {
+      id: uuidv1(),
+      title,
+      filter: 'all',
+    }
+    
+    setTodoLists( [ newTodoList, ...todoLists ] )
+    
+    setAllTasksObj(
+      { ...allTasksObj,
+        [ newTodoList.id ] : [ { id: uuidv1(), title, isDone: false } ]
+      }  
+      )
+      
+    }
+    
+  const changeFilter = (value: FilterValueType, ID: string) => {
+
+    let todoListFilter = todoLists.find(e => e.id === ID)
+
+    if (todoListFilter) {
+      todoListFilter.filter = value
+      setTodoLists([...todoLists])
+    }
 
   }
 
-  return (
-    <div>
+  const changeTodoListTitle = (title: string, idTodoList: string) => {
 
+    const changeTodoList = todoLists.find(el => el.id === idTodoList)
+
+    if (changeTodoList) {
+
+      changeTodoList.title = title
+
+      setTodoLists([ ...todoLists ])
+    }
+
+  }
+
+
+
+
+  return (
+    <div className='App'>
+      <AddItemForm addItem = { addTodoList }  />
       { 
         todoLists.map( ( el ) => { 
 
@@ -142,9 +196,12 @@ function App() {
             idTodoList = { el.id }
 
             removeTodoList = { removeTodoList }
-
+            changeTodoListTitle = { changeTodoListTitle }
+            
             changeStatusTask={changeStatusTask}
             changeFilter={changeFilter}
+            changeTitleTask = { changeTitleTask }
+            
             removeTask={removeTask}
             addNewTask={addTask}
 
@@ -161,7 +218,3 @@ function App() {
 }
 
 export default App;
-
-
-
-
