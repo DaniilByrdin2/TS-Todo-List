@@ -2,11 +2,8 @@ import React, { ChangeEvent, KeyboardEvent} from "react"
 
 import { useState } from "react"
 
-<<<<<<< HEAD
-=======
 import { IconButton, TextField } from '@mui/material'
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
->>>>>>> 9711cb8 (working with Material UI)
 
 
 type AddItemFormType = {
@@ -42,19 +39,6 @@ export const AddItemForm = (props: AddItemFormType) => {
 
     return (
         <div>
-<<<<<<< HEAD
-            <input type="text"
-                value={textTask}
-                onKeyPress={onKeyPressHandler}
-                onChange={onNewTitleChangeHandler}
-                className={error ? "error" : ""}
-            />
-
-            <button onClick={addTask}>+</button>
-
-            {error && <div className="error-message">{error}</div>}
-
-=======
             <TextField
                 variant={"outlined"}
                 label={"Type value"}
@@ -67,7 +51,6 @@ export const AddItemForm = (props: AddItemFormType) => {
             <IconButton onClick={addTask} color={"primary"}>
                 <AddCircleOutlineIcon />
             </IconButton>
->>>>>>> 9711cb8 (working with Material UI)
         </div>
     )
 }

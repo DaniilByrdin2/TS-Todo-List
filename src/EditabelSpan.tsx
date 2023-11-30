@@ -1,10 +1,7 @@
 import React, { ChangeEvent, KeyboardEvent, useState } from "react"
 
-<<<<<<< HEAD
-=======
 import { TextField } from "@mui/material"
 
->>>>>>> 9711cb8 (working with Material UI)
 
 type EditabelSpanType = {
     title: string,
@@ -22,16 +19,10 @@ export const EditabelSpan = (props: EditabelSpanType) => {
     }
 
     const activateViewMode = () => {
-<<<<<<< HEAD
-        setEditMode( false )
-        props.onChangeTaskTitle( title )
-=======
         if (title !== "") {
             setEditMode( false )
             props.onChangeTaskTitle( title )
         }
->>>>>>> 9711cb8 (working with Material UI)
-
     }
 
     const onChangeTitleHandler = ( e: ChangeEvent<HTMLInputElement> ) => {
@@ -39,11 +30,7 @@ export const EditabelSpan = (props: EditabelSpanType) => {
     }
 
     const onKeyPressEnter = ( e: KeyboardEvent<HTMLInputElement>  ) => {
-<<<<<<< HEAD
-        if (e.charCode === 13) {
-=======
         if (e.charCode === 13 && title !== "") {
->>>>>>> 9711cb8 (working with Material UI)
             props.onChangeTaskTitle( title )
             setEditMode( false )
         }
@@ -51,16 +38,6 @@ export const EditabelSpan = (props: EditabelSpanType) => {
 
     return (
         editMode ? 
-<<<<<<< HEAD
-        <input value={ title } 
-               onChange={ onChangeTitleHandler } 
-               onBlur={ activateViewMode }
-               onKeyPress = { onKeyPressEnter } 
-               autoFocus 
-               type="text" 
-        />
-        : <span onDoubleClick={ activateEditMode }>{ title }</span>
-=======
         <TextField 
                variant={"filled"}
                value={ title } 
@@ -70,7 +47,6 @@ export const EditabelSpan = (props: EditabelSpanType) => {
                autoFocus  
         />
         : <span onClick={ activateEditMode }>{ title }</span>
->>>>>>> 9711cb8 (working with Material UI)
     )
 }
 

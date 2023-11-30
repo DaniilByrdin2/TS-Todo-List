@@ -58,7 +58,6 @@ const Search = styled('div')(({ theme }) => ({
     return (
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position="static">
-
                 <Toolbar>
                     <IconButton
                         size="large"
