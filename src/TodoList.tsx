@@ -6,7 +6,8 @@ import { EditabelSpan } from './EditabelSpan'
 import './App.css'
 
 // types
-import { FilterValueType } from './App'
+// import { FilterValueType } from './App'
+// import { FilterValueType } from './'
 
 import { IconButton, Button, Checkbox } from '@mui/material'
 
@@ -19,12 +20,14 @@ export type TaskType = {
   isDone: boolean,
 }
 
+type FilterValueType = "all" | "active" | "completed"
+
 type PropsType = {
   idTodoList: string,
   title: string,
   tasks: Array<TaskType>,
   filterActiveBtn: FilterValueType,
-  
+
   removeTodoList: (idTodoList: string) => void
   changeTodoListTitle: ( title: string, idTodoList: string ) => void
   changeFilter: (value: FilterValueType, todoListId: string) => void //void = ничего не врозвращает
@@ -53,7 +56,7 @@ export function TodoList (props: PropsType) {
   const addTask = (title: string) => {
     props.addNewTask(title, props.idTodoList)
   }
-
+  
   
   return (
     <div>
@@ -84,7 +87,7 @@ export function TodoList (props: PropsType) {
 
           return (
 
-            <div key={id} className={!isDone ? "is-done" : ""}>
+            <div key={ id } className={!isDone ? "is-done" : ""}>
 
               <Checkbox checked={isDone} onChange={onChangeHandler} />
 
