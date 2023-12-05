@@ -1,3 +1,5 @@
+import { Dispatch } from 'react';
+import { ThunkAction } from 'redux-thunk';
 import { v1 as uuidv1 } from 'uuid';
 
 
@@ -135,4 +137,28 @@ export const ChangeTitle_AC = ( idTodoList: string , newTitle: string ): TypeCha
 
 export const ChangeFilter_AC = (  newFilter: FilterValueType, idTodoList: string ): TypeChangeFilter_AC => {
     return { type: CHANGE_FILTER_TODO_LIST , newFilter, idTodoList  }
+}
+
+
+
+// thank
+
+// type getStateType = () => TypeStateTodoList
+export type CurrentDispatchType = () => Dispatch<ActionsTypes>
+
+
+export type thunkType = ThunkAction <Promise<void> , TypeStateTodoList, unknown, ActionsTypes >
+
+export const MyThunk = ( newTitle: string ): thunkType => {
+
+    return async ( dispatch, getState ) => { 
+
+        console.log("123");
+
+        let cpSt = getState()
+
+        console.log( cpSt );
+                
+        dispatch( AddTodoList_AC( newTitle ) ) 
+    }
 }

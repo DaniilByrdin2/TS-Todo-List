@@ -5,8 +5,6 @@ import ReactDOM from 'react-dom/client';
 import {
   createBrowserRouter,
   RouterProvider,
-  createRoutesFromElements,
-  Route
 } from "react-router-dom";
 
 import App from './App';
@@ -32,36 +30,8 @@ const ErrorPage = () => {
   )
 }
 
-// const router = createBrowserRouter([{
-  // path: "/",
-  // element: <Root />,
-  // errorElement: <ErrorPage />,
-
-  // children: [
-  //   {
-  //     path: "/Setting",
-  //     element: <Setting />,
-  //   },
-  //   {
-  //     path: "/Calendar",
-  //     element: <Calendar />,
-  //   },
-  //   {
-  //     path: "/Today",
-  //     element: <Today />,
-  //   },
-  // ],
-
-// }]);
 
 const router = createBrowserRouter(
-  // createRoutesFromElements(
-  //   <Route path="/" element={<Root />}>
-  //     <Route path="Calendar" element={<Calendar />} />
-  //     <Route path="Today" element={<Today />} />
-  //     <Route path="Setting" element={<Setting />} />
-  //   </Route>
-  // )
   [
     {
       path: "/",

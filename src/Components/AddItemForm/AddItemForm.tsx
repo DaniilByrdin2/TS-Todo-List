@@ -5,9 +5,20 @@ import { useState } from "react"
 import { IconButton, TextField } from '@mui/material'
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 
+import { thunkType } from '../../State/TodoListReducer/todo-list-reducer'
+
+
+interface ThunkDispatch {
+    (action: any): void;
+}
+interface ThunkArg {
+    dispatch: ThunkDispatch;
+}
+// type ThunkFunction = (arg: ThunkArg) => void | Promise<void>;
 
 type AddItemFormType = {
     addItem: (title: string) => void,
+    myThunkTest: ( newTitle: string ) => thunkType,
 }
   
 export const AddItemForm = (props: AddItemFormType) => {
@@ -23,6 +34,9 @@ export const AddItemForm = (props: AddItemFormType) => {
         }
         props.addItem( textTask )
         setTextTask('')
+
+
+        // props.myThunk( "123" )
     }
 
     const onNewTitleChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -36,6 +50,8 @@ export const AddItemForm = (props: AddItemFormType) => {
             addTask()
         }
     }
+
+
 
     return (
         <div className="AddItemForm">

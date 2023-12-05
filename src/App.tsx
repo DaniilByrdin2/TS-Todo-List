@@ -3,6 +3,11 @@ import { useState } from "react"
 
 import { connect } from "react-redux"
 
+import { Dispatch } from 'react';
+import { ActionsTypes } from './State/TodoListReducer/todo-list-reducer'
+
+import { thunkType } from './State/TodoListReducer/todo-list-reducer'
+
 
 
 import { TodoList } from './Components/TodoList/TodoList'
@@ -25,7 +30,11 @@ import {
   AddTodoList_AC, 
   RemoveTodoList_AC,
   ChangeTitle_AC,
-  ChangeFilter_AC
+  ChangeFilter_AC,
+
+
+
+  MyThunk
 
 } from './State/TodoListReducer/todo-list-reducer'
 
@@ -62,7 +71,7 @@ export function App( props:any ) {
             <div className='App'>
               {/* container style={ { padding: "20px" } } */}
               <Grid style={{ marginTop: "30px" }} >
-                <AddItemForm addItem={props.addTodoList} />
+                <AddItemForm addItem={props.addTodoList} myThunkTest={ props.myThunkTest }/>
               </Grid>
               {/* container spacing={ 5 } style={ { paddingTop: "10px" } } */}
               <Grid >
@@ -100,6 +109,9 @@ export function App( props:any ) {
                       filterActiveBtn={el.filter}
 
                       tasks={tasksForTodoList}
+
+
+                      myThunkTest={ props.myThunkTest }
                     /></Paper></Grid>
                   })
                 }
@@ -120,8 +132,14 @@ const mapStateToProps = ( state:any ) => {
   }
 }
 
+type CurrentDispatchType = () => Dispatch<ActionsTypes>
+
+
+
 const mapDispanchToProps = ( dispatch:any ) => {
   return {
+    myThunkTest: ( newTitle: string ): thunkType => dispatch( MyThunk( newTitle ) ),
+
     addTodoList: ( newTitle: string ) => dispatch( AddTodoList_AC( newTitle) ),
     removeTodoList: ( idTodoList: string ) => dispatch( RemoveTodoList_AC( idTodoList ) ),
     changeTodoListTitle: ( idTodoList: string , newTitle: string ) => dispatch( ChangeTitle_AC( idTodoList, newTitle ) ),
