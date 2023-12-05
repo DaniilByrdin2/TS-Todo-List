@@ -1,13 +1,14 @@
 import { v1 as uuidv1 } from 'uuid';
 
+import  { todoListsID_1 }  from '../TodoListReducer/todo-list-reducer'
+import { todoListsID_2 }from '../TodoListReducer/todo-list-reducer'
+
 const __TODO_LIST_TASK__REMOVE_TASK = "__TODO_LIST_TASK__REMOVE_TASK"
 const __TODO_LIST_TASK__ADD_TASK = "__TODO_LIST_TASK__ADD_TASK"
 const __TODO_LIST_TASK__CHANGE_STATUS_TASK = "__TODO_LIST_TASK__CHANGE_STATUS_TASK"
 const __TODO_LIST_TASK__CHANGE_TITLE_TASK = "__TODO_LIST_TASK__CHANGE_TITLE_TASK"
 const __TODO_LIST_TASK_ADD_TASK_EMPTY = "__ADD_TODO_LIST"
 
-import { todoListsID_1 } from '../State/todo-list-reducer'
-import { todoListsID_2 }from '../State/todo-list-reducer'
 
 
 type TaskType = {

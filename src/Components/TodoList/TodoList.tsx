@@ -1,9 +1,9 @@
 import React, { ChangeEvent } from "react"
 
-import { AddItemForm } from './AddItemForm'
-import { EditabelSpan } from './EditabelSpan'
+import { AddItemForm } from '../AddItemForm/AddItemForm'
+import { EditabelSpan } from './EditabelSpan/EditabelSpan'
 
-import './App.css'
+import '../../App.css'
 
 // types
 // import { FilterValueType } from './App'

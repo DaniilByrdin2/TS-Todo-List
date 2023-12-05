@@ -1,19 +1,24 @@
 import React from 'react';
+import { useState } from "react"
 
 import { connect } from "react-redux"
 
 
-import { TodoList } from './TodoList'
-import { AddItemForm } from './AddItemForm'
 
-import SearchAppBar  from './SearchAppBar'
+import { TodoList } from './Components/TodoList/TodoList'
+import { AddItemForm } from './Components/AddItemForm/AddItemForm'
+import SearchAppBar  from './Components/SearchBar/SearchAppBar'
 
-import './App.css';
+
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 
+import './App.css';
 
+
+
+import  SimpleBottomNavigation   from './Components/BottomNavigation/BottomNavigation'
 
 
 import { 
@@ -22,7 +27,7 @@ import {
   ChangeTitle_AC,
   ChangeFilter_AC
 
-} from './State/todo-list-reducer'
+} from './State/TodoListReducer/todo-list-reducer'
 
 import {
   ChangeTitleTask_AC,
@@ -30,10 +35,10 @@ import {
   AddTask_AC,
   ChangeStatusTask_AC
 
-} from './State/todo-list-task-reducer'
+} from './State/TaskTodoListReducer/todo-list-task-reducer'
 
 
-import { FilterValueType } from './State/todo-list-reducer'
+import { FilterValueType } from './State/TodoListReducer/todo-list-reducer'
 
 
 
@@ -45,55 +50,65 @@ import { FilterValueType } from './State/todo-list-reducer'
 
 export function App( props:any ) {
 
+
+  let [ AppBar, setSearchAppBar ] = useState( false );
+
+
   return (
-    <>
-      <div><SearchAppBar /></div>
-      <Container fixed>
-        <div className='App'>
-          <Grid container style={ { padding: "20px" } }>
-            <AddItemForm addItem={ props.addTodoList } />
-          </Grid>  
-          <Grid container spacing={5}>
-            {
-              props.TodoList.map(( el:any ) => {
+    <div>
+      <SearchAppBar />
+        <main>
+          <Container fixed>
+            <div className='App'>
+              {/* container style={ { padding: "20px" } } */}
+              <Grid style={{ marginTop: "30px" }} >
+                <AddItemForm addItem={props.addTodoList} />
+              </Grid>
+              {/* container spacing={ 5 } style={ { paddingTop: "10px" } } */}
+              <Grid >
+                {
+                  props.TodoList.map((el: any) => {
 
-                let tasksForTodoList = props.TodoListTask[el.id]
-                
-                
+                    let tasksForTodoList = props.TodoListTask[el.id]
 
-                if (el.filter === "completed") {
-                  tasksForTodoList = tasksForTodoList.filter( ( t:any ) => t.isDone === true) 
+
+
+                    if (el.filter === "completed") {
+                      tasksForTodoList = tasksForTodoList.filter((t: any) => t.isDone === true)
+                    }
+                    if (el.filter === "active") {
+                      tasksForTodoList = tasksForTodoList.filter((t: any) => t.isDone === false)
+                    }
+
+                    // style={{ padding: "20px" } }
+                    return <Grid item><Paper  ><TodoList
+                      key={el.id}
+
+                      idTodoList={el.id}
+
+                      removeTodoList={props.removeTodoList}
+                      changeTodoListTitle={props.changeTodoListTitle}
+                      changeFilter={props.changeFilter}
+
+
+                      changeTitleTask={props.changeTitleTask}
+                      removeTask={props.removeTask}
+                      addNewTask={props.addTask}
+                      changeStatusTask={props.changeStatusTask}
+
+                      title={el.title}
+                      filterActiveBtn={el.filter}
+
+                      tasks={tasksForTodoList}
+                    /></Paper></Grid>
+                  })
                 }
-                if (el.filter === "active") {
-                  tasksForTodoList = tasksForTodoList.filter(( t:any ) => t.isDone === false) 
-                }
-
-                return <Grid item><Paper style={{ padding: "10px" }}><TodoList
-                  key={el.id}
-
-                  idTodoList={el.id}
-
-                  removeTodoList={props.removeTodoList}
-                  changeTodoListTitle={props.changeTodoListTitle}
-                  changeFilter={props.changeFilter}
-
-                  
-                  changeTitleTask={props.changeTitleTask}
-                  removeTask={props.removeTask}
-                  addNewTask={props.addTask}
-                  changeStatusTask = {props.changeStatusTask}
-
-                  title={el.title}
-                  filterActiveBtn={el.filter}
-
-                  tasks={ tasksForTodoList }
-                /></Paper></Grid>
-              })
-            }
-          </Grid>
-        </div>
-      </Container>
-    </>
+              </Grid>
+            </div>
+          </Container>
+        </main>
+        <footer><SimpleBottomNavigation /></footer>
+    </div>
   );
 }
 
@@ -120,3 +135,24 @@ const mapDispanchToProps = ( dispatch:any ) => {
 }
 
 export default connect( mapStateToProps, mapDispanchToProps )( App ) 
+
+
+
+// свурху слева аватар
+// настройка цвета аватара если нет фото
+
+// темная тема
+
+// добавить react router и сделать навигацию ностройек и тд
+
+
+// сделать календарь
+// сделать кнопку ref чтобы перекл с конца сразу к верхн таске
+// сделать футер( настройки календарь сегоднящние таски )
+// сделать поиск по таскам (по тайлту)
+// сделать логинизацию с сторонний API
+
+// написать на все тесты 
+// сделать полную типизацию проекта
+
+// после этого туду лист готов 

@@ -1,10 +1,10 @@
-import { TodoListTaskReducer } from './todo-list-task-reducer'
-import { TodoListReducer } from './todo-list-reducer'
+import { TodoListTaskReducer } from './TaskTodoListReducer/todo-list-task-reducer'
+import { TodoListReducer } from './TodoListReducer/todo-list-reducer'
 
-import {AllTasksObjType} from './todo-list-task-reducer'
-import {TypeStateTodoList} from './todo-list-reducer'
+import {AllTasksObjType} from './TaskTodoListReducer/todo-list-task-reducer'
+import {TypeStateTodoList} from './TodoListReducer/todo-list-reducer'
 
-import { AddTodoList_AC } from './todo-list-reducer'
+import { AddTodoList_AC } from './TodoListReducer/todo-list-reducer'
 
 
 

@@ -1,6 +1,11 @@
 .App {
-  padding: 30px;
+  /* padding: 30px; */
   display: flex;
+  justify-content: center;
+  width: 100%;
+
+
+  position: relative;
 }
 
 .App > div {
@@ -23,4 +28,36 @@
 
 .is-done {
   opacity: .5;
+}
+
+
+
+/*  */
+
+footer {
+
+  margin-top: 30px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+
+  position: absolute;
+  bottom: 0;
+}
+
+.container-todo {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+/* .AddItemForm {
+  width: 200px;
+} */
+
+
+main {
+  
+  overflow-y: scroll;
+  height: 800px;
 }

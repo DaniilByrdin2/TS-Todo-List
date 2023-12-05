@@ -11,6 +11,10 @@ import SearchIcon from '@mui/icons-material/Search';
 import Container from '@mui/material/Container';
 
 
+import LetterAvatars from '../Avatar/Avatar'
+
+
+
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -54,7 +58,18 @@ const Search = styled('div')(({ theme }) => ({
     },
   }));
   
-  export default function SearchAppBar() {
+
+
+
+
+  export default function SearchAppBar( props: any ) {
+
+
+
+    const clickNavBar = () => {
+      props.fnSearchAppBar()
+    }
+
     return (
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position="static">
@@ -65,8 +80,11 @@ const Search = styled('div')(({ theme }) => ({
                         color="inherit"
                         aria-label="open drawer"
                         sx={{ mr: 2 }}
-                    >
-                        <MenuIcon />
+                        onClick = { clickNavBar }
+                    >   
+                          {/* <MenuIcon /> */}
+                          <LetterAvatars />
+                        
                     </IconButton>
                     <Typography
                         variant="h6"
@@ -74,7 +92,7 @@ const Search = styled('div')(({ theme }) => ({
                         component="div"
                         sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
                     >
-                        MUI
+                        NAME USER
                     </Typography>
                     <Search>
                         <SearchIconWrapper>
