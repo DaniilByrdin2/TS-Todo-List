@@ -113,7 +113,6 @@ export const TodoListReducer = ( state: TypeStateTodoList = InitialState, action
             return [ ...copySt ]
 
         default:
-            // throw new Error("Not action type  1231231");
             return state
             
     }
@@ -140,10 +139,6 @@ export const ChangeFilter_AC = (  newFilter: FilterValueType, idTodoList: string
 }
 
 
-
-// thank
-
-// type getStateType = () => TypeStateTodoList
 export type CurrentDispatchType = () => Dispatch<ActionsTypes>
 
 
@@ -153,7 +148,7 @@ export const MyThunk = ( newTitle: string ): thunkType => {
 
     return async ( dispatch, getState ) => { 
 
-        console.log("123");
+        console.log("MyThunk");
 
         let cpSt = getState()
 

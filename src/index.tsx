@@ -13,14 +13,19 @@ import { Calendar } from './Components/Calendar/Calendar';
 import { Today } from './Components/Today/Today';
 
 import reportWebVitals from './reportWebVitals';
-import { State } from './State/Redux/Redux'
+import { store } from './State/Redux/Redux'
 
 import './index.css';
 
 
+import { LoginForm } from './Components/LoginForm/LoginForm'
+
+
 const Root = () => {
   return (
-    <Provider store={State}><App /></Provider>
+    <Provider store={ store }>
+      <App />
+    </Provider>
   )
 }
 
@@ -36,6 +41,10 @@ const router = createBrowserRouter(
     {
       path: "/",
       element: <Root/>,
+    },
+    {
+      path: "/Login",
+      element: <LoginForm/>,
     },
     {
       path: "/Calendar",

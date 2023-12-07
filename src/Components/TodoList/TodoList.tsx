@@ -15,7 +15,7 @@ import { Delete } from '@mui/icons-material';
 
 
 
-import { CurrentDispatchType } from '../../State/TodoListReducer/todo-list-reducer'
+import { CurrentDispatchType, thunkType } from '../../State/TodoListReducer/todo-list-reducer'
 
 export type TaskType = {
   id: string,
@@ -40,7 +40,7 @@ type PropsType = {
   changeStatusTask: (id: string, isDone: boolean, idTodoList: string) => void,
   changeTitleTask: ( newTitle: string, idTask: string, idTodoList: string ) => void
 
-  myThunkTest : ( newTitle: string ) => CurrentDispatchType
+  // myThunkTest : ( newTitle: string ) => thunkType
   // tasks: TaskType[] 
 }
 
@@ -76,7 +76,8 @@ export function TodoList (props: PropsType) {
         </IconButton>
       </h1>
 
-      <AddItemForm addItem={addTask} myThunkTest = { props.myThunkTest } />
+      {/* myThunkTest = { props.myThunkTest } */}
+      <AddItemForm addItem={addTask}  />
 
       <ul>
         {props.tasks.map(({ id, title, isDone }) => {

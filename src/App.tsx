@@ -1,29 +1,18 @@
-import React from 'react';
-import { useState } from "react"
+import React, { useEffect, useState } from 'react';
 
 import { connect } from "react-redux"
 
-import { Dispatch } from 'react';
-import { ActionsTypes } from './State/TodoListReducer/todo-list-reducer'
-
-import { thunkType } from './State/TodoListReducer/todo-list-reducer'
-
-
+import { Navigate } from "react-router-dom";
 
 import { TodoList } from './Components/TodoList/TodoList'
 import { AddItemForm } from './Components/AddItemForm/AddItemForm'
 import SearchAppBar  from './Components/SearchBar/SearchAppBar'
-
+import  SimpleBottomNavigation   from './Components/BottomNavigation/BottomNavigation'
+import { Loading } from './Components/Loading/Loading'
 
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
-
-import './App.css';
-
-
-
-import  SimpleBottomNavigation   from './Components/BottomNavigation/BottomNavigation'
 
 
 import { 
@@ -31,11 +20,6 @@ import {
   RemoveTodoList_AC,
   ChangeTitle_AC,
   ChangeFilter_AC,
-
-
-
-  MyThunk
-
 } from './State/TodoListReducer/todo-list-reducer'
 
 import {
@@ -46,8 +30,15 @@ import {
 
 } from './State/TaskTodoListReducer/todo-list-task-reducer'
 
+import { AUTH_ME_THUNK, LOG_OUT_ME_THUNK } from './State/LoginReduser/LoginReducer'
+
 
 import { FilterValueType } from './State/TodoListReducer/todo-list-reducer'
+
+
+import './App.css';
+
+
 
 
 
@@ -56,31 +47,49 @@ import { FilterValueType } from './State/TodoListReducer/todo-list-reducer'
 // }
 
 
-
 export function App( props:any ) {
 
 
   let [ AppBar, setSearchAppBar ] = useState( false );
 
+  let [ loginPage, setLoginPage ] = useState( false )
+  let [ loading, setLoading ] = useState( true )
+  
+
+  useEffect( () => {
+
+    props.AUTH_ME_THUNK()
+
+    if( props.isAuth === false ) {
+      setLoginPage( true )
+    } else if( props.isAuth === true ) (
+      setLoading( false )
+    )
+
+
+  }, [ props.isAuth ] )
+
 
   return (
     <div>
-      <SearchAppBar />
+
+      { loginPage && <Navigate to="/Login" replace={true} /> }
+
+
+      { loading === true ? <Loading/> :  
+      <div>
+        <SearchAppBar isAuth = { props.isAuth } />
         <main>
           <Container fixed>
             <div className='App'>
-              {/* container style={ { padding: "20px" } } */}
               <Grid style={{ marginTop: "30px" }} >
-                <AddItemForm addItem={props.addTodoList} myThunkTest={ props.myThunkTest }/>
+                <AddItemForm addItem={props.AddTodoList_AC} />
               </Grid>
-              {/* container spacing={ 5 } style={ { paddingTop: "10px" } } */}
               <Grid >
                 {
                   props.TodoList.map((el: any) => {
 
                     let tasksForTodoList = props.TodoListTask[el.id]
-
-
 
                     if (el.filter === "completed") {
                       tasksForTodoList = tasksForTodoList.filter((t: any) => t.isDone === true)
@@ -89,29 +98,26 @@ export function App( props:any ) {
                       tasksForTodoList = tasksForTodoList.filter((t: any) => t.isDone === false)
                     }
 
-                    // style={{ padding: "20px" } }
                     return <Grid item><Paper  ><TodoList
                       key={el.id}
 
                       idTodoList={el.id}
 
-                      removeTodoList={props.removeTodoList}
-                      changeTodoListTitle={props.changeTodoListTitle}
-                      changeFilter={props.changeFilter}
+                      removeTodoList={props.RemoveTodoList_AC}
+                      changeTodoListTitle={props.ChangeTitle_AC}
+                      changeFilter={props.ChangeFilter_AC}
 
 
-                      changeTitleTask={props.changeTitleTask}
-                      removeTask={props.removeTask}
-                      addNewTask={props.addTask}
-                      changeStatusTask={props.changeStatusTask}
+                      changeTitleTask={props.ChangeTitleTask_AC}
+                      removeTask={props.RemoveTask_AC}
+                      addNewTask={props.AddTask_AC}
+                      changeStatusTask={props.ChangeStatusTask_AC}
 
                       title={el.title}
                       filterActiveBtn={el.filter}
 
                       tasks={tasksForTodoList}
 
-
-                      myThunkTest={ props.myThunkTest }
                     /></Paper></Grid>
                   })
                 }
@@ -120,39 +126,63 @@ export function App( props:any ) {
           </Container>
         </main>
         <footer><SimpleBottomNavigation /></footer>
+      </div>          
+      }
     </div>
   );
 }
 
 
+
+
 const mapStateToProps = ( state:any ) => {
   return {
     TodoList: state.TodoList,
-    TodoListTask: state.TodoListTask
+    TodoListTask: state.TodoListTask,
+    isAuth: state.LoginData.isAutn
   }
 }
-
-type CurrentDispatchType = () => Dispatch<ActionsTypes>
-
-
 
 const mapDispanchToProps = ( dispatch:any ) => {
   return {
-    myThunkTest: ( newTitle: string ): thunkType => dispatch( MyThunk( newTitle ) ),
+    // myThunkTest: ( newTitle: string ): thunkType => dispatch( MyThunk( newTitle ) ),
 
-    addTodoList: ( newTitle: string ) => dispatch( AddTodoList_AC( newTitle) ),
-    removeTodoList: ( idTodoList: string ) => dispatch( RemoveTodoList_AC( idTodoList ) ),
-    changeTodoListTitle: ( idTodoList: string , newTitle: string ) => dispatch( ChangeTitle_AC( idTodoList, newTitle ) ),
-    changeFilter: (  newFilter: FilterValueType, idTodoList: string ) => dispatch( ChangeFilter_AC(  newFilter, idTodoList ) ),
+    AUTH_ME_THUNK: () => dispatch( AUTH_ME_THUNK() ) ,
+    LOG_OUT_ME_THUNK: () => dispatch( LOG_OUT_ME_THUNK() ),
 
-    changeTitleTask: ( newTitle: string, idTask: string, todoListId: string ) => dispatch( ChangeTitleTask_AC( newTitle, idTask, todoListId ) ),
-    removeTask: ( title: string, todoListId: string ) => dispatch( RemoveTask_AC( title, todoListId ) ),
-    addTask: ( title: string, todoListId: string ) => dispatch( AddTask_AC( title, todoListId ) ),
-    changeStatusTask: ( idTask: string, isDone: boolean, todoListId: string ) => dispatch( ChangeStatusTask_AC( idTask, isDone, todoListId ) )
+    AddTodoList_AC: ( newTitle: string ) => dispatch( AddTodoList_AC( newTitle) ),
+    RemoveTodoList_AC: ( idTodoList: string ) => dispatch( RemoveTodoList_AC( idTodoList ) ),
+    ChangeTitle_AC: ( idTodoList: string , newTitle: string ) => dispatch( ChangeTitle_AC( idTodoList, newTitle ) ),
+    ChangeFilter_AC: (  newFilter: FilterValueType, idTodoList: string ) => dispatch( ChangeFilter_AC(  newFilter, idTodoList ) ),
+
+    ChangeTitleTask_AC: ( newTitle: string, idTask: string, todoListId: string ) => dispatch( ChangeTitleTask_AC( newTitle, idTask, todoListId ) ),
+    RemoveTask_AC: ( title: string, todoListId: string ) => dispatch( RemoveTask_AC( title, todoListId ) ),
+    AddTask_AC: ( title: string, todoListId: string ) => dispatch( AddTask_AC( title, todoListId ) ),
+    ChangeStatusTask_AC: ( idTask: string, isDone: boolean, todoListId: string ) => dispatch( ChangeStatusTask_AC( idTask, isDone, todoListId ) )
   }
 }
 
-export default connect( mapStateToProps, mapDispanchToProps )( App ) 
+
+export default  connect( mapStateToProps, mapDispanchToProps )( App ) 
+
+// export default compose( 
+//   connect( mapStateToProps, {
+
+//     AddTodoList_AC,
+//     RemoveTodoList_AC,
+//     ChangeTitle_AC,
+//     ChangeFilter_AC,
+
+//     ChangeTitleTask_AC,
+//     RemoveTask_AC,
+//     AddTask_AC,
+//     ChangeStatusTask_AC,
+
+//     MyThunk
+
+//   }))( App ) 
+
+
 
 
 

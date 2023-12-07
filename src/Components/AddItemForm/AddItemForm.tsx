@@ -1,6 +1,6 @@
 import React, { ChangeEvent, KeyboardEvent} from "react"
 
-import { useState } from "react"
+import { useState , useEffect } from "react"
 
 import { IconButton, TextField } from '@mui/material'
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
@@ -18,10 +18,17 @@ interface ThunkArg {
 
 type AddItemFormType = {
     addItem: (title: string) => void,
-    myThunkTest: ( newTitle: string ) => thunkType,
+    // myThunkTest: ( newTitle: string ) => thunkType,
 }
   
 export const AddItemForm = (props: AddItemFormType) => {
+
+
+    useEffect( () => {
+
+        // props.myThunkTest("12345")
+
+    }, [] )
 
     const [textTask, setTextTask] = useState('')
     const [error, setError] = useState<string | null>(null)
@@ -50,6 +57,8 @@ export const AddItemForm = (props: AddItemFormType) => {
             addTask()
         }
     }
+
+
 
 
 

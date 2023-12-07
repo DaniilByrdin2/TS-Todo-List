@@ -16,6 +16,7 @@ import LetterAvatars from '../Avatar/Avatar'
 
 
 
+
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
     borderRadius: theme.shape.borderRadius,
@@ -71,6 +72,7 @@ const Search = styled('div')(({ theme }) => ({
     }
 
     return (
+      <>
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position="static">
                 <Toolbar>
@@ -106,5 +108,6 @@ const Search = styled('div')(({ theme }) => ({
                 </Toolbar>
             </AppBar>
         </Box>
+      </>  
     );
   }
