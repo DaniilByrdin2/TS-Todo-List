@@ -15,7 +15,7 @@ export default function SimpleBottomNavigation() {
 
   return (
     <>
-      <Box sx={{ width: 2000 }}>
+      <Box sx={{ minWidth: 500, margin: 0  }}>
         <BottomNavigation
           showLabels
           value={value}
@@ -23,15 +23,15 @@ export default function SimpleBottomNavigation() {
             setValue(newValue);
           }}
         >
-          {/* label="Calendar" */}
+
           <Link to={`Calendar`}>
-            <BottomNavigationAction id={"Calendar"} label="Calendar" icon={<CalendarMonthIcon />} sx={{ width: 2000 }} />
+            <BottomNavigationAction id={"Calendar"} label="Calendar" icon={<CalendarMonthIcon />} sx={{ minWidth: 200  }} />
           </Link>
           <Link to={`Today`}>
-            <BottomNavigationAction id={"Today"} label="Today" icon={<FormatListBulletedIcon />} sx={{ width: 2000 }} />
+            <BottomNavigationAction id={"Today"} label="Today" icon={<FormatListBulletedIcon />} sx={{ minWidth: 200 }} />
             </Link>
           <Link to={`Setting`}>
-            <BottomNavigationAction id={"Setting"} label="Settings" icon={<SettingsIcon />} sx={{ width: 2000 }} />
+            <BottomNavigationAction id={"Setting"} label="Settings" icon={<SettingsIcon />} sx={{ minWidth: 200 }} />
           </Link>
 
         </BottomNavigation>

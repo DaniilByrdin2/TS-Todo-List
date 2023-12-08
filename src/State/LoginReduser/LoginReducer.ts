@@ -9,8 +9,8 @@ const initial = {
     isAuth: null,
     id: 0,
     data: {
-        email: '',
-        login: ''
+        email: '123',
+        login: '123'
     }
 }
 
@@ -57,14 +57,18 @@ export const LoginReducer = ( state: StateType = initial, action: ActionsTypes )
         case "AUTH-ME":
             
             return {
-                ...state,
                 isAuth: true,
                 id: action.id,
+                data: {
+                    email: action.email,
+                    login: action.login
+                }
             }
 
         case "LOG_OUT":
 
             return {
+                ...state,
                 isAuth: false,
                 id: 0,
                 data: {

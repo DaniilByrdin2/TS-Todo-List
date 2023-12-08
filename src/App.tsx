@@ -69,14 +69,13 @@ export function App( props:any ) {
 
 
   return (
-    <div>
+    <div className='wrapper-app'>
 
       { loginPage && <Navigate to="/Login" replace={true} /> }
-
-
       { loading === true ? <Loading/> :  
+
       <div>
-        <SearchAppBar isAuth = { props.isAuth } />
+        <SearchAppBar userData = { props.userData } />
         <main>
           <Container fixed>
             <div className='App'>
@@ -96,7 +95,7 @@ export function App( props:any ) {
                       tasksForTodoList = tasksForTodoList.filter((t: any) => t.isDone === false)
                     }
 
-                    return <Grid item><Paper  ><TodoList
+                    return <Grid item ><Paper><TodoList
                       key={el.id}
 
                       idTodoList={el.id}
@@ -123,9 +122,9 @@ export function App( props:any ) {
             </div>
           </Container>
         </main>
-        <footer><SimpleBottomNavigation /></footer>
       </div>          
       }
+      <footer><SimpleBottomNavigation /></footer>  
     </div>
   );
 }
@@ -137,7 +136,8 @@ const mapStateToProps = ( state:any ) => {
   return {
     TodoList: state.TodoList,
     TodoListTask: state.TodoListTask,
-    isAuth: state.LoginData.isAuth
+    isAuth: state.LoginData.isAuth,
+    userData: state.LoginData
   }
 }
 

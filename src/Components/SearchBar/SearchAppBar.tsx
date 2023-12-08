@@ -13,7 +13,7 @@ import Container from '@mui/material/Container';
 
 import LetterAvatars from '../Avatar/Avatar'
 
-
+import { useState, useEffect } from 'react'
 
 
 
@@ -65,11 +65,21 @@ const Search = styled('div')(({ theme }) => ({
 
   export default function SearchAppBar( props: any ) {
 
+    const [ login, setLogin ] = useState('USER_NAME')
+    const [ email, setEmaile ] = useState( '' )
 
-
+    
     const clickNavBar = () => {
-      props.fnSearchAppBar()
+      
     }
+
+    useEffect( () => {
+      if ( props.userData.data ) {
+        setEmaile( props.userData.data.email )
+        setLogin( props.userData.data.login )
+
+      }
+    }, [] )
 
     return (
       <>
@@ -94,7 +104,7 @@ const Search = styled('div')(({ theme }) => ({
                         component="div"
                         sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
                     >
-                        NAME USER
+                        { email }
                     </Typography>
                     <Search>
                         <SearchIconWrapper>

@@ -1,11 +1,18 @@
+body {
+  margin: 0;
+	padding: 0;
+
+  height: 100vh;
+
+  position: relative;
+}
+
 .App {
   /* padding: 30px; */
   display: flex;
   justify-content: center;
   width: 100%;
 
-
-  position: relative;
 }
 
 .App > div {
@@ -34,17 +41,6 @@
 
 /*  */
 
-footer {
-
-  margin-top: 30px;
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-
-  position: absolute;
-  bottom: 0;
-}
 
 .container-todo {
   display: flex;
@@ -55,9 +51,25 @@ footer {
   width: 200px;
 } */
 
-
+.wrapper-app {
+  min-height: 100%;
+}
 main {
-  
   overflow-y: scroll;
-  height: 800px;
+  /* height: 800px; */
+  max-height: 90vh;
+
+  /* border: 1px solid red; */
+
+
+  z-index: 0;
+}
+
+footer {
+  position: absolute;
+  left: 0;
+	bottom: 0;
+	width: 100%;
+
+  z-index: 5;
 }
