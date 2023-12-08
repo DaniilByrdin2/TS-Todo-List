@@ -1,3 +1,4 @@
+import { AnyCnameRecord } from 'dns';
 import { LoginAPI } from '../../DAL/DAL'
 
 
@@ -5,7 +6,7 @@ import { Dispatch } from 'react'
 import { ThunkAction } from 'redux-thunk';
 
 const initial = {
-    isAutn: undefined,
+    isAuth: null,
     id: 0,
     data: {
         email: '',
@@ -18,7 +19,7 @@ type objTypeState = {
     login: string
 }
 type StateType = {
-    isAutn: boolean | undefined,
+    isAuth: boolean | null,
     id: number,
     data: objTypeState
 }
@@ -27,7 +28,7 @@ type StateType = {
 
 
 type TypeAuthMe = {
-    type: "AUTN-ME"
+    type: "AUTH-ME"
     id: number,
     email: string,
     login: string
@@ -53,18 +54,18 @@ type ActionsTypes = TypeAuthMe | TypeLogOutMe | TypeLoginUser
 export const LoginReducer = ( state: StateType = initial, action: ActionsTypes ) => {
 
     switch (action.type) {
-        case "AUTN-ME":
+        case "AUTH-ME":
             
             return {
                 ...state,
-                isAutn: true,
+                isAuth: true,
                 id: action.id,
             }
 
         case "LOG_OUT":
 
             return {
-                isAutn: false,
+                isAuth: false,
                 id: 0,
                 data: {
                     email: '',
@@ -78,7 +79,7 @@ export const LoginReducer = ( state: StateType = initial, action: ActionsTypes )
             const { email, password } = action.data
             return {
                 ...state,
-                isAutn: true,
+                isAuth: true,
                 data: {
                     email: email,
                     login: password
@@ -107,7 +108,8 @@ type TypeAuthMeData = {
 
 
 export const AUTH_ME_AC = ( obj: TypeAuthMeData ): TypeAuthMe => {
-    return { type: "AUTN-ME", id: obj.id , email: obj.email, login: obj.login }
+    
+    return { type: "AUTH-ME", id: obj.id , email: obj.email, login: obj.login }
 }
 
 export const LOG_OUT_AC = ():TypeLogOutMe => {
@@ -137,14 +139,13 @@ type TypeAuthMeResponse = {
 
 
 export const LOGIN_THUNK = ( data: TypeLoginData ): thunkType => {
-    return async ( dispatch, getState ) => {
+    return async ( dispatch, getState ) => {        
 
-        LoginAPI.login( data.email, data.password, data.rememberMe ).then( ( res ) => {
-            if ( res.resultCode ) {
+        LoginAPI.login( data.email, data.password, data.rememberMe )
+        .then( ( res: any ) => {
+            
+            if ( res.data.resultCode === 0 ) {
                 dispatch( LOGIN_AC( data ) )
-
-                console.log(getState());
-                
             }
 
         } )
@@ -158,15 +159,10 @@ export const AUTH_ME_THUNK = (): thunkType => {
         LoginAPI.authMe().then((res: TypeAuthMeResponse ) => {
                 if ( res.resultCode === 0) {
 
-                    console.log( res, " auth me ")
                     return dispatch(AUTH_ME_AC(res.data))
 
-                    // console.log( getState() );
-                    
-                } else {
-                    console.log(" запрос отработал: данных нет ");
-                    return dispatch(LOG_OUT_AC())
-                    
+                } else if ( res.resultCode === 1 ) {
+                    return dispatch( LOG_OUT_AC() )
                 }
         })
     }

@@ -6,12 +6,15 @@ import { LoginReducer } from '../LoginReduser/LoginReducer'
 
 import {  thunk  } from 'redux-thunk';
 
+import { reducer as formReducer } from 'redux-form'
+
  
 
 const Reduceers = combineReducers ( {
     TodoList: TodoListReducer,
     TodoListTask: TodoListTaskReducer,
-    LoginData: LoginReducer
+    LoginData: LoginReducer,
+    FormLogin: formReducer,
 } )
 
 export const store = createStore( 

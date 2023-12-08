@@ -49,25 +49,23 @@ import './App.css';
 
 export function App( props:any ) {
 
-
-  let [ AppBar, setSearchAppBar ] = useState( false );
-
   let [ loginPage, setLoginPage ] = useState( false )
   let [ loading, setLoading ] = useState( true )
   
 
   useEffect( () => {
 
-    props.AUTH_ME_THUNK()
+    if( props.isAuth === null ) {
+      props.AUTH_ME_THUNK()
+    }
 
     if( props.isAuth === false ) {
       setLoginPage( true )
-    } else if( props.isAuth === true ) (
+    } else if( props.isAuth === true ) {
+      setLoginPage( false )
       setLoading( false )
-    )
-
-
-  }, [ props.isAuth ] )
+    }
+  } , [ props.isAuth ] )
 
 
   return (
@@ -139,16 +137,15 @@ const mapStateToProps = ( state:any ) => {
   return {
     TodoList: state.TodoList,
     TodoListTask: state.TodoListTask,
-    isAuth: state.LoginData.isAutn
+    isAuth: state.LoginData.isAuth
   }
 }
 
 const mapDispanchToProps = ( dispatch:any ) => {
   return {
-    // myThunkTest: ( newTitle: string ): thunkType => dispatch( MyThunk( newTitle ) ),
 
     AUTH_ME_THUNK: () => dispatch( AUTH_ME_THUNK() ) ,
-    LOG_OUT_ME_THUNK: () => dispatch( LOG_OUT_ME_THUNK() ),
+    // LOG_OUT_ME_THUNK: () => dispatch( LOG_OUT_ME_THUNK() ),
 
     AddTodoList_AC: ( newTitle: string ) => dispatch( AddTodoList_AC( newTitle) ),
     RemoveTodoList_AC: ( idTodoList: string ) => dispatch( RemoveTodoList_AC( idTodoList ) ),
@@ -165,42 +162,4 @@ const mapDispanchToProps = ( dispatch:any ) => {
 
 export default  connect( mapStateToProps, mapDispanchToProps )( App ) 
 
-// export default compose( 
-//   connect( mapStateToProps, {
 
-//     AddTodoList_AC,
-//     RemoveTodoList_AC,
-//     ChangeTitle_AC,
-//     ChangeFilter_AC,
-
-//     ChangeTitleTask_AC,
-//     RemoveTask_AC,
-//     AddTask_AC,
-//     ChangeStatusTask_AC,
-
-//     MyThunk
-
-//   }))( App ) 
-
-
-
-
-
-// свурху слева аватар
-// настройка цвета аватара если нет фото
-
-// темная тема
-
-// добавить react router и сделать навигацию ностройек и тд
-
-
-// сделать календарь
-// сделать кнопку ref чтобы перекл с конца сразу к верхн таске
-// сделать футер( настройки календарь сегоднящние таски )
-// сделать поиск по таскам (по тайлту)
-// сделать логинизацию с сторонний API
-
-// написать на все тесты 
-// сделать полную типизацию проекта
-
-// после этого туду лист готов 

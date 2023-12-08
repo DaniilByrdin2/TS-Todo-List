@@ -18,8 +18,13 @@ import { store } from './State/Redux/Redux'
 import './index.css';
 
 
-import { LoginForm } from './Components/LoginForm/LoginForm'
+import ContainerLoginForm from './Components/LoginForm/LoginForm'
 
+
+
+
+
+const StoreForLogin = store.getState().LoginData
 
 const Root = () => {
   return (
@@ -44,7 +49,7 @@ const router = createBrowserRouter(
     },
     {
       path: "/Login",
-      element: <LoginForm/>,
+      element: <Provider store={ store }><ContainerLoginForm/></Provider>,
     },
     {
       path: "/Calendar",
