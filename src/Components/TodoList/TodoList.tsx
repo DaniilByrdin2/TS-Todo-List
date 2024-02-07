@@ -4,6 +4,7 @@ import { AddItemForm } from '../AddItemForm/AddItemForm'
 import { EditabelSpan } from './EditabelSpan/EditabelSpan'
 
 import '../../App.css'
+import "./TodoList.css"
 
 // types
 // import { FilterValueType } from './App'
@@ -64,7 +65,7 @@ export function TodoList (props: PropsType) {
   
   
   return (
-    <div>
+    <div className="element-test">
       <h1>
         <EditabelSpan
           onChangeTaskTitle={changeTodoListTitle}
@@ -76,7 +77,6 @@ export function TodoList (props: PropsType) {
         </IconButton>
       </h1>
 
-      {/* myThunkTest = { props.myThunkTest } */}
       <AddItemForm addItem={addTask}  />
 
       <ul>

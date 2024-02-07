@@ -8,9 +8,11 @@ import {
 } from "react-router-dom";
 
 import App from './App';
-import { Setting } from './Components/Setting/Setting';
-import { Calendar } from './Components/Calendar/Calendar';
-import { Today } from './Components/Today/Today';
+import Setting from './Components/Setting/Setting';
+import Today from './Components/Today/Today';
+
+import Calendar  from './Components/Calendar/Calendar';
+
 
 import reportWebVitals from './reportWebVitals';
 import { store } from './State/Redux/Redux'
@@ -22,6 +24,11 @@ import ContainerLoginForm from './Components/LoginForm/LoginForm'
 
 
 
+const ErrorPage = () => {
+  return (
+    <div>Error page</div>
+  )
+}
 
 
 const StoreForLogin = store.getState().LoginData
@@ -34,11 +41,6 @@ const Root = () => {
   )
 }
 
-const ErrorPage = () => {
-  return (
-    <div>Error page</div>
-  )
-}
 
 
 const router = createBrowserRouter(
@@ -53,15 +55,15 @@ const router = createBrowserRouter(
     },
     {
       path: "/Calendar",
-      element: <Calendar />,
+      element: <Provider store={ store }><Calendar /></Provider>,
     },
     {
       path: "/Today",
-      element: <Today />,
+      element: <Provider store={ store }><Today /></Provider>,
     },
     {
       path: "/Setting",
-      element: <Setting />,
+      element: <Provider store={ store }><Setting /></Provider>,
     }
   ]
 );

@@ -14,6 +14,7 @@ import Container from '@mui/material/Container';
 import LetterAvatars from '../Avatar/Avatar'
 
 import { useState, useEffect } from 'react'
+import { connect } from 'react-redux';
 
 
 
@@ -121,3 +122,16 @@ const Search = styled('div')(({ theme }) => ({
       </>  
     );
   }
+
+
+//   const mapStateToProps = ( state:any ) => {
+//     return {
+//       userData: state.LoginData
+//     }
+//   }
+  
+//   const mapDispanchToProps = ( dispatch:any ) => {
+//     return {}
+//   }
+
+// export default connect( mapStateToProps, mapDispanchToProps )(SearchAppBar)

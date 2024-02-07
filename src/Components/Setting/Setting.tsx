@@ -1,9 +1,30 @@
 import React from "react"
+import { connect } from "react-redux"
+
+import SearchAppBar from "../SearchBar/SearchAppBar"
+import SimpleBottomNavigation from "../BottomNavigation/BottomNavigation"
 
 
-
-export const Setting = () => {
+const Setting = (props:any) => {
     return ( 
-        <div>setting</div>
+        <>
+        <SearchAppBar userData={props.userData} />
+        <div>Setting</div>
+        <footer>
+          <SimpleBottomNavigation />
+        </footer>
+      </>
     )
 }
+
+const mapStateToProps = ( state:any ) => {
+    return {
+      userData: state.LoginData
+    }
+  }
+  
+const mapDispanchToProps = ( dispatch:any ) => {
+    return {} 
+}
+
+export default connect( mapStateToProps, mapDispanchToProps)(Setting)

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 
 import { connect } from "react-redux"
 
@@ -6,9 +6,9 @@ import { Navigate } from "react-router-dom";
 
 import { TodoList } from './Components/TodoList/TodoList'
 import { AddItemForm } from './Components/AddItemForm/AddItemForm'
-import SearchAppBar  from './Components/SearchBar/SearchAppBar'
 import  SimpleBottomNavigation   from './Components/BottomNavigation/BottomNavigation'
 import { Loading } from './Components/Loading/Loading'
+import SearchAppBar from "./Components/SearchBar/SearchAppBar"
 
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
@@ -37,6 +37,7 @@ import { FilterValueType } from './State/TodoListReducer/todo-list-reducer'
 
 
 import './App.css';
+import { MailRounded } from '@mui/icons-material';
 
 
 
@@ -51,6 +52,7 @@ export function App( props:any ) {
 
   let [ loginPage, setLoginPage ] = useState( false )
   let [ loading, setLoading ] = useState( true )
+
   
 
   useEffect( () => {
@@ -68,6 +70,13 @@ export function App( props:any ) {
   } , [ props.isAuth ] )
 
 
+  function ClickScroll () {
+    let main = document.getElementById("main")
+    if ( main ) {
+      main.scrollTo(0, 0);
+    }
+  }
+  
   return (
     <div className='wrapper-app'>
 
@@ -76,13 +85,14 @@ export function App( props:any ) {
 
       <div>
         <SearchAppBar userData = { props.userData } />
-        <main>
-          <Container fixed>
+        <main id = "main">
+          <Container style={ {padding: "0px"} } fixed>
             <div className='App'>
-              <Grid style={{ marginTop: "30px" }} >
+              <Grid style={{ marginTop: "30px", padding: "0px" }} >
                 <AddItemForm addItem={props.AddTodoList_AC} />
               </Grid>
-              <Grid >
+              <Grid style={ { display: "flex", flexWrap: "wrap" } }>
+
                 {
                   props.TodoList.map((el: any) => {
 
@@ -95,7 +105,7 @@ export function App( props:any ) {
                       tasksForTodoList = tasksForTodoList.filter((t: any) => t.isDone === false)
                     }
 
-                    return <Grid item ><Paper><TodoList
+                    return <Grid style={ { marginRight: "15px", marginTop: "15px" } } item ><Paper><TodoList
                       key={el.id}
 
                       idTodoList={el.id}
@@ -124,7 +134,7 @@ export function App( props:any ) {
         </main>
       </div>          
       }
-      <footer><SimpleBottomNavigation /></footer>  
+      <footer><SimpleBottomNavigation ClickScroll = { ClickScroll } /></footer>  
     </div>
   );
 }
